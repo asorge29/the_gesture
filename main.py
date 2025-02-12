@@ -21,6 +21,8 @@ while cap.isOpened():
             mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
     cv2.imshow('Hand Detection', frame)
+    file_path = f'output/{int(cap.get(cv2.CAP_PROP_POS_MSEC))}.png'
+    cv2.imwrite(file_path, frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

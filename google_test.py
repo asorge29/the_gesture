@@ -20,6 +20,19 @@ def print_result(result: GestureRecognizerResult, output_image: mp.Image, timest
 
     print(out)
 
+    image_np = output_image.numpy_view()
+
+    if output_image.image_format == mp.ImageFormat.SRGB:
+        image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+    elif output_image.image_format == mp.ImageFormat.SRGBA:
+        image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGBA2BGR)
+    else:
+        raise ValueError("Unsupported image format")
+
+    file_path = f'output/{timestamp_ms}.png'
+    cv2.imwrite(file_path, image_cv)
+    print(file_path)
+
 options = GestureRecognizerOptions(
     base_options=BaseOptions(model_asset_path='gesture_recognizer.task'),
     running_mode=VisionRunningMode.LIVE_STREAM,

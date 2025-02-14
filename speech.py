@@ -1,3 +1,3 @@
 from gtts import gTTS
-tts = gTTS("Well fuck you too")
-tts.save("speech.mp3")
+tts = gTTS("", lang="en", tld="com.au")
+tts.save("aus.mp3")

@@ -1,5 +1,6 @@
 import mediapipe as mp
 import cv2
+import playsound
 
 BaseOptions = mp.tasks.BaseOptions
 GestureRecognizer = mp.tasks.vision.GestureRecognizer
@@ -15,6 +16,9 @@ def print_result(result: GestureRecognizerResult, output_image: mp.Image, timest
     if len(result.handedness) > 0:
         out += f'Hand: {result.handedness[0][0].category_name} '
         out += f'Gesture: {result.gestures[0][0].category_name}'
+
+        if result.gestures[0][0].category_name == 'middle_finger':
+            playsound.playsound('speech.mp3')
     else:
         out = 'No Gesture'
 

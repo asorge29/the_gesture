@@ -32,11 +32,10 @@ while cap.isOpened():
 
             if middle_tip.y < middle_pip.y and index_tip.y > index_pip.y and ring_tip.y > ring_pip.y and pinky_tip.y > pinky_pip.y:
                 mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS, landmark_drawing_spec, connection_drawing_spec)
-                print("Middle Finger")
             else:
                 mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
-    #cv2.imshow('Hand Detection', frame)
+    cv2.imshow('Hand Detection', frame)
     #file_path = f'output/{int(cap.get(cv2.CAP_PROP_POS_MSEC))}.png'
     #cv2.imwrite(file_path, frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):

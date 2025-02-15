@@ -4,19 +4,23 @@ import threading
 import mediapipe as mp
 from playsound import playsound
 import concurrent.futures
+from random import choice
+import os
 
 class MiddleFingerDetector:
     def __init__(self):
         self.running = True
-        self.playing = False
         self.middle_finger = False
+        self.voice_lines = [os.path.join('audio', f) for f in os.listdir('audio') if f.endswith('.mp3')]
 
         self.window = tk.Tk()
         self.window.title("The Gesture")
         frame = tk.Frame(self.window, padx=10, pady=10)
-        frame.grid()
-        quit_button = tk.Button(frame, text="Quit", command=self.close)
-        quit_button.grid()
+        frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+        tk.Label(frame, text="The Gesture", font=("Arial", 20)).grid(row=0, column=0)
+        tk.Label(frame, text="Middle finger detector.").grid(row=1, column=0)
+        tk.Button(frame, text="Quit", command=self.close).grid()
 
         self.hands = mp.solutions.hands.Hands(min_detection_confidence=0.7, min_tracking_confidence=0.7)
 
@@ -59,12 +63,12 @@ class MiddleFingerDetector:
 
     def play_voice(self):
         if self.middle_finger:
-            playsound('speech.mp3')
+            playsound(choice(self.voice_lines))
             self.middle_finger = False
 
     def close(self):
         self.running = False
-        print("Closing...")
+        self.pool.shutdown(wait=False)
         self.window.quit()
 
 if __name__ == "__main__":
